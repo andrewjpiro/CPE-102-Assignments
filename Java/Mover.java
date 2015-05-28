@@ -20,6 +20,10 @@ public abstract class Mover extends AnimatedActor {
 	public int getRate() {
 		return rate;
 	}
+	
+	public List<Point> getPath(){
+		return path;
+	}
 
 	public void schedule(WorldModel world, long ticks, ImageStore iStore) {
 		scheduleAction(world, ticks, iStore, rate);
