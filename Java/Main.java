@@ -14,6 +14,7 @@ public class Main extends PApplet {
 	private WorldModel world;
 	private WorldView viewPort;
 	private Background defaultBgnd;
+   private PImage pathImage;
 
 	public void setup() {
 		size(windowWidth, windowHeight);
@@ -31,6 +32,7 @@ public class Main extends PApplet {
 
 		world.loadFromSave(iStore, "gaia.sav");
 
+      pathImage = loadImage("images/footstep.png");
 		// Ore testOre = new Ore(new Point(5, 10), "Ore", 1000,
 		// iStore.getImages("ore"));
 		// world.addEntity(testOre);
@@ -40,7 +42,7 @@ public class Main extends PApplet {
 	public void draw() {
 		background(color(220, 230, 245));
 		world.updateOnTime(System.currentTimeMillis());
-		viewPort.draw(this, world);
+		viewPort.draw(this, world, pathImage);
 	}
 
 	public void keyPressed() {
