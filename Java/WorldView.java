@@ -14,12 +14,13 @@ public class WorldView {
 		this.worldSize = new Point(worldSize.getX(), worldSize.getY());
 		bottomRight = new Point(viewGrid.getX(), viewGrid.getY());
 		tileWidth = window.getX() / viewGrid.getX();
+		tileHeight = window.getY() / viewGrid.getY();
 	}
 
 	public void draw(Main main, WorldModel world, PImage pathImage) {
 		drawBackground(main, world);
 		drawEntities(main, world);
-      drawPath(main, world, pathImage);
+		drawPath(main, world, pathImage);
 	}
 
 	public void move(Point delta) {
