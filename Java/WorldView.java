@@ -12,11 +12,15 @@ public class WorldView {
 	public WorldView(String string, Point viewGrid, Point window,
 			Point worldSize) {
 		topLeft = new Point(0, 0);
+		this.setValues(viewGrid, window, worldSize);
+		tracked = null;
+	}
+	
+	public void setValues(Point viewGrid, Point window, Point worldSize){
 		this.worldSize = new Point(worldSize.getX(), worldSize.getY());
-		bottomRight = new Point(viewGrid.getX(), viewGrid.getY());
+		bottomRight = new Point(viewGrid.getX() + topLeft.getX(), viewGrid.getY() + topLeft.getY());
 		tileWidth = window.getX() / viewGrid.getX();
 		tileHeight = window.getY() / viewGrid.getY();
-      tracked = null;
 	}
 
 	public void draw(Main main, WorldModel world, PImage pathImage) {
@@ -53,8 +57,8 @@ public class WorldView {
 	}
 
 	private void drawBackground(PApplet main, WorldModel world) {
-		for (int i = topLeft.getY(); i < bottomRight.getY(); i++) {
-			for (int j = topLeft.getX(); j < bottomRight.getX(); j++) {
+		for (int i = topLeft.getY(); i <= bottomRight.getY(); i++) {
+			for (int j = topLeft.getX(); j <= bottomRight.getX(); j++) {
 				main.image(world.getBackground(new Point(j, i)).getImage(),
 						(j - topLeft.getX()) * tileWidth, (i - topLeft.getY())
 								* tileHeight, tileWidth, tileHeight);
@@ -86,8 +90,8 @@ public class WorldView {
 
 	private boolean inView(Positionable entity) {
 		Point pos = entity.getPosition();
-		return pos.getX() >= topLeft.getX() && pos.getX() < bottomRight.getX()
+		return pos.getX() >= topLeft.getX() && pos.getX() <= bottomRight.getX()
 				&& pos.getY() >= topLeft.getY()
-				&& pos.getY() < bottomRight.getY();
+				&& pos.getY() <= bottomRight.getY();
 	}
 }

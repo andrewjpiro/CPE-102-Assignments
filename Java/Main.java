@@ -40,6 +40,10 @@ public class Main extends PApplet {
 	}
 
 	public void draw() {
+		viewPort.setValues(new Point(viewWidth, viewHeight), 
+				new Point(this.getSize().width,  this.getSize().height),
+				new Point(viewWidth * worldScale, viewHeight * worldScale));
+		
 		background(color(220, 230, 245));
 		world.updateOnTime(System.currentTimeMillis());
 		viewPort.draw(this, world, pathImage);
