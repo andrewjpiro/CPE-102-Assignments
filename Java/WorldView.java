@@ -4,9 +4,10 @@ import processing.core.*;
 public class WorldView {
 	private Point topLeft;
 	private Point bottomRight;
-	private Point worldSize;
+	private Point tileArraySize;
 	private float tileWidth;
 	private float tileHeight;
+	private Point tilesToDisplay;
    private  Mover tracked;
 
 	public WorldView(String string, Point viewGrid, Point window,
@@ -16,11 +17,11 @@ public class WorldView {
 		tracked = null;
 	}
 	
-	public void setValues(Point viewGrid, Point window, Point worldSize){
-		this.worldSize = new Point(worldSize.getX(), worldSize.getY());
-		bottomRight = new Point(viewGrid.getX() + topLeft.getX(), viewGrid.getY() + topLeft.getY());
-		tileWidth = window.getX() / viewGrid.getX();
-		tileHeight = window.getY() / viewGrid.getY();
+	public void setValues(Point tilesToDisplay, Point pixelDimensions, Point tileArraySize){
+		this.tileArraySize = new Point(tileArraySize.getX(), tileArraySize.getY());
+		bottomRight = new Point(tilesToDisplay.getX() + topLeft.getX(), tilesToDisplay.getY() + topLeft.getY());
+		tileWidth = pixelDimensions.getX() / tilesToDisplay.getX();
+		tileHeight = pixelDimensions.getY() / tilesToDisplay.getY();
 	}
 
 	public void draw(Main main, WorldModel world, PImage pathImage) {
@@ -31,9 +32,9 @@ public class WorldView {
 
 	public void move(Point delta) {
 		if (topLeft.getX() + delta.getX() >= 0
-				&& bottomRight.getX() + delta.getX() <= worldSize.getX()
+				&& bottomRight.getX() + delta.getX() <= tileArraySize.getX()
 				&& topLeft.getY() + delta.getY() >= 0
-				&& bottomRight.getY() + delta.getY() <= worldSize.getY()) {
+				&& bottomRight.getY() + delta.getY() <= tileArraySize.getY()) {
 
 			topLeft.setX(topLeft.getX() + delta.getX());
 			bottomRight.setX(bottomRight.getX() + delta.getX());
@@ -57,8 +58,13 @@ public class WorldView {
 	}
 
 	private void drawBackground(PApplet main, WorldModel world) {
-		for (int i = topLeft.getY(); i <= bottomRight.getY(); i++) {
-			for (int j = topLeft.getX(); j <= bottomRight.getX(); j++) {
+		int height = tileArraySize.getY();
+		int width = tileArraySize.getX();
+		boolean farDown =  bottomRight.getY() >= height;
+		boolean farRight =  bottomRight.getX() >= width;
+		
+		for (int i = topLeft.getY(); farDown ? i < height : i <= bottomRight.getY() ; i++) {
+			for (int j = topLeft.getX(); farRight ? j < width : j <=  bottomRight.getX(); j++) {
 				main.image(world.getBackground(new Point(j, i)).getImage(),
 						(j - topLeft.getX()) * tileWidth, (i - topLeft.getY())
 								* tileHeight, tileWidth, tileHeight);
