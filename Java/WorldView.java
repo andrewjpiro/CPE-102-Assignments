@@ -7,6 +7,7 @@ public class WorldView {
 	private Point worldSize;
 	private float tileWidth;
 	private float tileHeight;
+   private  Mover tracked;
 
 	public WorldView(String string, Point viewGrid, Point window,
 			Point worldSize) {
@@ -15,6 +16,7 @@ public class WorldView {
 		bottomRight = new Point(viewGrid.getX(), viewGrid.getY());
 		tileWidth = window.getX() / viewGrid.getX();
 		tileHeight = window.getY() / viewGrid.getY();
+      tracked = null;
 	}
 
 	public void draw(Main main, WorldModel world, PImage pathImage) {
@@ -66,7 +68,10 @@ public class WorldView {
          (int)(main.mouseY / tileHeight));
 
       if(world.getTileOccupant(mousePt) instanceof Mover) {
-         drawList(main, ((Mover)world.getTileOccupant(mousePt)).getPath(), pathImage);
+         tracked = (Mover)world.getTileOccupant(mousePt);
+      }
+      if(tracked != null) {
+         drawList(main, tracked.getPath(), pathImage);
       }
    }
 
