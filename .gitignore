@@ -11,3 +11,4 @@ Assignment3.iml
 bin/*
 Java/JavaDoc/
 java.policy.applet
+*.jar
