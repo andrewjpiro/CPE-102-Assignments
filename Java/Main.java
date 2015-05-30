@@ -3,12 +3,12 @@ import processing.core.*;
 public class Main extends PApplet {
 	private final int windowWidth = 640;
 	private final int windowHeight = 480;
-	private final int viewWidth = 20;
-	private final int viewHeight = 15;
+	private final int arrayWidth = 40;
+	private final int arrayHeight = 30;
+	private int viewWidth = 20;
+	private int viewHeight = 15;
 	private final int tileWidth = windowWidth / viewWidth;
 	private final int tileHeight = windowHeight / viewHeight;
-
-	private final int worldScale = 2;
 
 	private ImageStore iStore;
 	private WorldModel world;
@@ -23,12 +23,11 @@ public class Main extends PApplet {
 		defaultBgnd = new Background("DefaultImageName",
 				iStore.getImages("background_default"));
 
-		world = new WorldModel(viewHeight * worldScale, viewWidth * worldScale,
-				defaultBgnd);
+		world = new WorldModel(arrayHeight, arrayWidth, defaultBgnd);
 
 		viewPort = new WorldView("What is this for???", new Point(viewWidth,
 				viewHeight), new Point(windowWidth, windowHeight), new Point(
-				viewWidth * worldScale, viewHeight * worldScale));
+				arrayWidth, arrayHeight));
 
 		world.loadFromSave(iStore, "gaia.sav");
 
@@ -40,6 +39,10 @@ public class Main extends PApplet {
 	}
 
 	public void draw() {
+		viewPort.setValues(new Point(viewWidth, viewHeight), 
+				new Point(this.getSize().width,  this.getSize().height),
+				new Point(arrayWidth, arrayHeight));
+		
 		background(color(220, 230, 245));
 		world.updateOnTime(System.currentTimeMillis());
 		viewPort.draw(this, world, pathImage);
@@ -58,6 +61,18 @@ public class Main extends PApplet {
 			break;
 		case 'a':
 			viewPort.move(new Point(-1, 0));
+			break;
+		case 'g':
+			if (viewHeight < arrayHeight - 1 && viewWidth < arrayWidth - 1) {
+				viewWidth++;
+				viewHeight++;
+			}
+			break;
+		case 'h':
+			if (viewHeight > 1 && viewWidth > 1){
+				viewWidth--;
+				viewHeight--;
+			}
 			break;
 		}
 
