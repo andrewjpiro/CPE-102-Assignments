@@ -15,6 +15,7 @@ public abstract class Mover extends AnimatedActor {
 			List<PImage> images) {
 		super(position, name, animationRate, images);
 		this.rate = rate;
+		path = new LinkedList<Point>();
 	}
 
 	public int getRate() {
@@ -54,6 +55,11 @@ public abstract class Mover extends AnimatedActor {
 			openSet.remove(cur);
 
 			List<Point> neighbors = getNeighbors(cur.getLoc());
+			for (int i = 0; i < neighbors.size(); i++){
+				Point cur1 = neighbors.get(i);
+				if (!world.withinBounds(cur1))
+					neighbors.remove(cur1);
+			}
 
 			for (Point neighbor : neighbors) {// node has already been
 				if (closeSet.indexOf(new AStarNode(neighbor)) != -1) // visited													
@@ -79,7 +85,7 @@ public abstract class Mover extends AnimatedActor {
 		}
 
 		// no path found
-		return null;
+		return new LinkedList<Point>();
 	}
 
 	private List<Point> reconstructPath(AStarNode current) {
@@ -98,7 +104,7 @@ public abstract class Mover extends AnimatedActor {
 		toReturn.add(new Point(cur.getX() - 1, cur.getY()));
 		toReturn.add(new Point(cur.getX() + 1, cur.getY()));
 		toReturn.add(new Point(cur.getX(), cur.getY() - 1));
-		toReturn.add(new Point(cur.getX(), cur.getY() + 1));
+		toReturn.add(new Point(cur.getX(), cur.getY() + 1));		
 		return toReturn;
 	}
 
@@ -111,9 +117,6 @@ public abstract class Mover extends AnimatedActor {
 	
 	public Point nextPosition(WorldModel world, Point destination) {
 		// TODO : if destination changes recalculate
-		
-		if (path == null)
-			path = aStar(world, destination);
 
 		Point next = nextOnPath(world);
 		if (next != null){

@@ -159,7 +159,7 @@ public class WorldModel {
 
 	public Ore findNearestOre(Point pt) {
 		List<Positionable> candidates = new ArrayList<Positionable>();
-		;
+		
 		for (Positionable e : entities) {
 			if (e instanceof Ore) {
 				candidates.add(e);
@@ -171,7 +171,7 @@ public class WorldModel {
 
 	public Blacksmith findNearestBlacksmith(Point pt) {
 		List<Positionable> candidates = new ArrayList<Positionable>();
-		;
+		
 		for (Positionable e : entities) {
 			if (e instanceof Blacksmith) {
 				candidates.add(e);
@@ -179,6 +179,18 @@ public class WorldModel {
 		}
 
 		return (Blacksmith) nearest(pt, candidates);
+	}
+	
+	public OreBlob findNearestOreBlob(Point pt) {
+		List<Positionable> candidates = new ArrayList<Positionable>();
+		
+		for (Positionable e : entities) {
+			if (e instanceof OreBlob) {
+				candidates.add(e);
+			}
+		}
+
+		return (OreBlob) nearest(pt, candidates);
 	}
 
 	public void loadFromSave(ImageStore iStore, String filename) {
@@ -234,7 +246,7 @@ public class WorldModel {
 		return null;
 	}
 
-	private boolean withinBounds(Point pt) {
+	public boolean withinBounds(Point pt) {
 		return (pt.getX() >= 0 && pt.getX() < columns)
 				&& (pt.getY() >= 0 && pt.getY() < rows);
 	}
@@ -261,10 +273,5 @@ public class WorldModel {
 		int deltaY = pt1.getY() - pt2.getY();
 
 		return deltaX * deltaX + deltaY * deltaY;
-	}
-
-	public OreBlob findNearestOreBlob(Point position) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
