@@ -262,4 +262,9 @@ public class WorldModel {
 
 		return deltaX * deltaX + deltaY * deltaY;
 	}
+
+	public OreBlob findNearestOreBlob(Point position) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

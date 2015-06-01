@@ -152,15 +152,6 @@ public abstract class Mover extends AnimatedActor {
 
 	public abstract boolean canMove(WorldModel world, Point pt);
 
-	private static int sign(int x) {
-		if (x < 0)
-			return -1;
-		else if (x > 0)
-			return 1;
-		else
-			return 0;
-	}
-
 	protected static boolean adjacent(Point one, Point two) {
 		return (one.getX() == two.getX() && Math.abs(one.getY() - two.getY()) == 1)
 				|| (one.getY() == two.getY() && Math.abs(one.getX()

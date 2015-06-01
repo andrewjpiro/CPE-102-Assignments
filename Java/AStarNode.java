@@ -34,8 +34,10 @@ public class AStarNode {
 	}
 
 	public static int calculateHeuristic(Point from, Point to) {
-		return Math.abs(from.getX() - to.getX())
-				+ Math.abs(from.getY() - to.getY());
+		return (int) Math.round(Math.sqrt(Math.pow(from.getX() - to.getX(),  2.0) + Math.pow(from.getY() - to.getY(), 2.0)));
+		
+		//return Math.abs(from.getX() - to.getX())
+		//		+ Math.abs(from.getY() - to.getY());
 	}
 
 	public AStarNode getCameFrom() {

@@ -60,4 +60,11 @@ public class Vein extends Actor {
 		scheduleAction(world, ticks, iStore, rate);
 
 	}
+	
+	public static Vein createVein(WorldModel world, long ticks, String name, Point pos, ImageStore iStore){
+		Vein toReturn = new Vein(pos, name, 3000, 1, iStore.getImages("vein"));
+		toReturn.schedule(world, ticks, iStore);
+		return toReturn;
+		
+	}
 }
