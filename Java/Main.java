@@ -37,6 +37,9 @@ public class Main extends PApplet {
       			200, 600, iStore);
       	knight.schedule(world, System.currentTimeMillis(), iStore);
       	world.addEntity(knight);
+      	OreBlob blob = new OreBlob(new Point(5, 5), "", 200, 1000, iStore);
+      	blob.schedule(world, System.currentTimeMillis(), iStore);
+      	world.addEntity(blob);
 		// Ore testOre = new Ore(new Point(5, 10), "Ore", 1000,
 		// iStore.getImages("ore"));
 		// world.addEntity(testOre);

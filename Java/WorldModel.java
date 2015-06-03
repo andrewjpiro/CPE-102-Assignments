@@ -43,7 +43,7 @@ public class WorldModel {
 		return tiles;
 	}
 
-	public void clearPendingAtions(Actor entity) {
+	public void clearPendingActions(Actor entity) {
 		for (Action a : entity.getPendingActions()) {
 			unscheduleAction(a);
 		}
@@ -112,7 +112,7 @@ public class WorldModel {
 
 	public void removeEntity(Positionable entity) {
 		if (entity instanceof Actor) {
-			clearPendingAtions((Actor) entity);
+			clearPendingActions((Actor) entity);
 
 		}
 		removeEntityAt(entity.getPosition());
@@ -159,7 +159,7 @@ public class WorldModel {
 
 	public Ore findNearestOre(Point pt) {
 		List<Positionable> candidates = new ArrayList<Positionable>();
-		
+
 		for (Positionable e : entities) {
 			if (e instanceof Ore) {
 				candidates.add(e);
@@ -171,7 +171,7 @@ public class WorldModel {
 
 	public Blacksmith findNearestBlacksmith(Point pt) {
 		List<Positionable> candidates = new ArrayList<Positionable>();
-		
+
 		for (Positionable e : entities) {
 			if (e instanceof Blacksmith) {
 				candidates.add(e);
@@ -180,10 +180,10 @@ public class WorldModel {
 
 		return (Blacksmith) nearest(pt, candidates);
 	}
-	
+
 	public OreBlob findNearestOreBlob(Point pt) {
 		List<Positionable> candidates = new ArrayList<Positionable>();
-		
+
 		for (Positionable e : entities) {
 			if (e instanceof OreBlob) {
 				candidates.add(e);
