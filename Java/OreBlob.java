@@ -30,15 +30,21 @@ public class OreBlob extends Mover {
 		return (!world.isOccupied(pt) || world.getTileOccupant(pt) instanceof Ore);
 	}
 
+   public void die(WorldModel world, ImageStore iStore,long ticks) {
+         world.removeEntity(this);
+         Vein vein = Vein.createVein(world, ticks, " ", getPosition(), iStore);
+         world.addEntity(vein);
+   }
+
 	protected Action createAction(WorldModel world, ImageStore iStore) {
 		Action[] actions = { null };
-		actions[0] = (long ticks) -> {
+		actions[0] = (long ticks)-> {
 			removePendingAction(actions[0]);
 
 			Vein vein = world.findNearestVein(getPosition());
-			
+
 			super.updatePath(world, vein);
-			
+
 			boolean atVein = toTarget(world, vein);
 
 			long delay = this.rate;

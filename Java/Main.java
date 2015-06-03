@@ -5,8 +5,8 @@ public class Main extends PApplet {
 	private final int windowHeight = 480;
 	private final int arrayWidth = 40;
 	private final int arrayHeight = 30;
-	private int viewWidth = 40;
-	private int viewHeight = 30;
+	private int viewWidth = 20;
+	private int viewHeight = 15;
 	private final int tileWidth = windowWidth / viewWidth;
 	private final int tileHeight = windowHeight / viewHeight;
 
@@ -32,9 +32,9 @@ public class Main extends PApplet {
 		world.loadFromSave(iStore, "gaia.sav");
 
       pathImage = loadImage("images/footstep.png");
-      
-      	Knight knight = new Knight(new Point(1,1), "", 
-      			1000, 600, iStore.getImages("knight"));
+
+      	Knight knight = new Knight(new Point(1,1), "",
+      			200, 600, iStore);
       	knight.schedule(world, System.currentTimeMillis(), iStore);
       	world.addEntity(knight);
 		// Ore testOre = new Ore(new Point(5, 10), "Ore", 1000,
@@ -44,10 +44,10 @@ public class Main extends PApplet {
 	}
 
 	public void draw() {
-		viewPort.setValues(new Point(viewWidth, viewHeight), 
+		viewPort.setValues(new Point(viewWidth, viewHeight),
 				new Point(this.getSize().width,  this.getSize().height),
 				new Point(arrayWidth, arrayHeight));
-		
+
 		background(color(220, 230, 245));
 		world.updateOnTime(System.currentTimeMillis());
 		viewPort.draw(this, world, pathImage);
@@ -84,9 +84,9 @@ public class Main extends PApplet {
 	}
 
 	public void mousePressed() {
-		
+
 	}
-	
+
 	public static void main(String[] args) {
 		PApplet.main("Main");
 	}

@@ -3,8 +3,8 @@ import processing.core.PImage;
 
 public class Entity {
 
+	protected List<PImage> images;
 	private String name;
-	private List<PImage> images;
 	private int currentImage;
 
 	public Entity(String name, List<PImage> images) {
@@ -26,10 +26,10 @@ public class Entity {
 	}
 
 	public PImage getImage() {
-		return images.get(currentImage);
+		return images.get(currentImage % images.size());
 	}
 
 	public void nextImage() {
-		currentImage = (currentImage + 1) % images.size();
+		currentImage = (currentImage + 1);
 	}
 }
