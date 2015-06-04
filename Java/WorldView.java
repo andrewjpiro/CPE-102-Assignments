@@ -2,7 +2,7 @@ import java.util.List;
 import processing.core.*;
 
 public class WorldView {
-	private Point topLeft;
+	public Point topLeft;
 	private Point bottomRight;
 	private Point tileArraySize;
 	private float tileWidth;
@@ -16,7 +16,7 @@ public class WorldView {
 		this.setValues(viewGrid, window, worldSize);
 		tracked = null;
 	}
-	
+
 	public void setValues(Point tilesToDisplay, Point pixelDimensions, Point tileArraySize){
 		this.tileArraySize = new Point(tileArraySize.getX(), tileArraySize.getY());
 		bottomRight = new Point(tilesToDisplay.getX() + topLeft.getX(), tilesToDisplay.getY() + topLeft.getY());
@@ -62,7 +62,7 @@ public class WorldView {
 		int width = tileArraySize.getX();
 		boolean farDown =  bottomRight.getY() >= height;
 		boolean farRight =  bottomRight.getX() >= width;
-		
+
 		for (int i = topLeft.getY(); farDown ? i < height : i <= bottomRight.getY() ; i++) {
 			for (int j = topLeft.getX(); farRight ? j < width : j <=  bottomRight.getX(); j++) {
 				main.image(world.getBackground(new Point(j, i)).getImage(),

@@ -7,6 +7,7 @@ public class Main extends PApplet {
 	private final int arrayHeight = 30;
 	private int viewWidth = 20;
 	private int viewHeight = 15;
+   private boolean colosseum;
 	private final int tileWidth = windowWidth / viewWidth;
 	private final int tileHeight = windowHeight / viewHeight;
 
@@ -17,6 +18,7 @@ public class Main extends PApplet {
    private PImage pathImage;
 
 	public void setup() {
+      colosseum = false;
 		size(windowWidth, windowHeight);
 		iStore = new ImageStore(this, "imagelist", tileWidth, tileWidth);
 
@@ -37,13 +39,10 @@ public class Main extends PApplet {
       			200, 600, iStore);
       	knight.schedule(world, System.currentTimeMillis(), iStore);
       	world.addEntity(knight);
+
       	OreBlob blob = new OreBlob(new Point(5, 5), "", 200, 1000, iStore);
       	blob.schedule(world, System.currentTimeMillis(), iStore);
       	world.addEntity(blob);
-		// Ore testOre = new Ore(new Point(5, 10), "Ore", 1000,
-		// iStore.getImages("ore"));
-		// world.addEntity(testOre);
-		// testOre.schedule(world, System.currentTimeMillis(), iStore);
 	}
 
 	public void draw() {
@@ -87,7 +86,13 @@ public class Main extends PApplet {
 	}
 
 	public void mousePressed() {
-
+      Point mousePt = new Point(viewPort.topLeft.getX() +
+         (int)(mouseX / tileWidth), viewPort.topLeft.getY() +
+         (int)(mouseY / tileHeight));
+      if(!colosseum) {
+         colosseum = true;
+         world.addColosseum(mousePt, iStore);
+      }
 	}
 
 	public static void main(String[] args) {
