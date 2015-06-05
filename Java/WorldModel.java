@@ -92,10 +92,10 @@ public class WorldModel {
 	}
 
    public void addColosseum(Point pt, ImageStore iStore) {
-      for(int row = 0; row < 4; row++) {
-         for(int col = 0; col < 4; col++) {
-            addEntity(new Amphitheatre(new Point(pt.getX() + col,
-               pt.getY() + row), "", iStore, (row + 1) * (col + 1) - 1));
+      for(int row = 1; row < 5; row++) {
+         for(int col = 1; col < 5; col++) {
+            addEntity(new Amphitheatre(new Point(pt.getX() + col - 1,
+               pt.getY() + row - 1), "", iStore, (row-1) * 4 + col -1));
          }
       }
    }
