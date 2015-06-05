@@ -12,18 +12,23 @@ public class Miner extends Mover {
 
 	private int resourceLimit;
 	private int resource;
+   private boolean training;
 
 	public Miner(Point position, String name, int animationRate, int rate,
 			int resourceLimit, int resource, List<PImage> images) {
 		super(position, name, animationRate, rate, images);
 		this.resourceLimit = resourceLimit;
 		this.resource = resource;
+      training = false;
 	}
 
 	public boolean canMove(WorldModel world, Point pt) {
-
 		return !world.isOccupied(pt);
 	}
+
+   public void setTargetColosseum() {
+      training = true;
+   }
 
 	public static Positionable createFromProperties(String[] prop,
 			ImageStore iStore) {
@@ -40,21 +45,32 @@ public class Miner extends Mover {
 		Action[] actions = { null };
 		actions[0] = (long ticks) -> {
 			removePendingAction(actions[0]);
-			Point entityPt = getPosition();
-			Positionable target = null;
-			if (resource < resourceLimit) {
-				target = world.findNearestOre(entityPt);
-			} else {
-				target = world.findNearestBlacksmith(entityPt);
-			}
-			
-			super.updatePath(world, target);
+         Point entityPt = getPosition();
+         Positionable target = null;
+         if (training) {
+            target = world.findNearestAmphitheatre();
+         }
+         else if (resource < resourceLimit) {
+            target = world.findNearestOre(entityPt);
+         } else {
+            target = world.findNearestBlacksmith(entityPt);
+         }
 
-			boolean found = toTarget(world, target);
-			if (found) {
-				updateResourceCount(world, target);
-			}
-			scheduleAction(world, ticks, iStore, rate);
+         super.updatePath(world, target);
+
+         boolean found = toTarget(world, target);
+         if (found && training) {
+            Knight knight = new Knight(getPosition(), "",
+               200, 600, iStore);
+            knight.schedule(world, System.currentTimeMillis(), iStore);
+            world.removeEntity(this);
+            world.addEntity(knight);
+
+         }
+         else if (found) {
+            updateResourceCount(world, target);
+         }
+         scheduleAction(world, ticks, iStore, rate);
 
 			return getPosition();
 		};

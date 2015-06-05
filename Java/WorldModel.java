@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
 import java.util.Scanner;
-import java.util.Iterator;
 import java.util.PriorityQueue;
 
 public class WorldModel {
@@ -76,8 +75,13 @@ public class WorldModel {
    public void addColosseum(Point pt, ImageStore iStore) {
       for(int row = 1; row < 5; row++) {
          for(int col = 1; col < 5; col++) {
-            addEntity(new Amphitheatre(new Point(pt.getX() + col - 1,
-               pt.getY() + row - 1), "", iStore, (row-1) * 4 + col -1));
+            Point currentPt = new Point(pt.getX() + col - 1, pt.getY() + row -1);
+            Positionable oldEntity = (Positionable)getTileOccupant(currentPt);
+            if(oldEntity != null) {
+               removeEntity(oldEntity);
+            }
+            addEntity(new Amphitheatre(currentPt, "", iStore,
+               (row-1) * 4 + col -1));
          }
       }
    }
