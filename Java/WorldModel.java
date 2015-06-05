@@ -74,23 +74,12 @@ public class WorldModel {
 	}
 
    public void addColosseum(Point pt, ImageStore iStore) {
-      addEntity(new Amphitheatre(pt, "", iStore, 0));
-      addEntity(new Amphitheatre(new Point(pt.getX() + 1, pt.getY()),
-         "", iStore, 1));
-      addEntity(new Amphitheatre(new Point(pt.getX() + 2, pt.getY()),
-         "", iStore, 2));
-      addEntity(new Amphitheatre(new Point(pt.getX(), pt.getY() + 1),
-         "", iStore, 3));
-      addEntity(new Amphitheatre(new Point(pt.getX() + 1, pt.getY() + 1),
-         "", iStore, 4));
-      addEntity(new Amphitheatre(new Point(pt.getX() + 2, pt.getY() + 1),
-         "", iStore, 5));
-      addEntity(new Amphitheatre(new Point(pt.getX(), pt.getY() + 2),
-         "", iStore, 6));
-      addEntity(new Amphitheatre(new Point(pt.getX() + 1, pt.getY() + 2),
-         "", iStore, 7));
-      addEntity(new Amphitheatre(new Point(pt.getX() + 2, pt.getY() + 2),
-         "", iStore, 8));
+      for(int row = 0; row < 4; row++) {
+         for(int col = 0; col < 4; col++) {
+            addEntity(new Amphitheatre(new Point(pt.getX() + col,
+               pt.getY() + row), "", iStore, (row + 1) * (col + 1) - 1));
+         }
+      }
    }
 
 	public Entity getTileOccupant(Point pt) {
