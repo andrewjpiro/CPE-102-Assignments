@@ -1,4 +1,5 @@
 import processing.core.*;
+import java.util.List;
 
 public class Main extends PApplet {
 	private final int windowWidth = 640;
@@ -34,15 +35,6 @@ public class Main extends PApplet {
 		world.loadFromSave(iStore, "gaia.sav");
 
       pathImage = loadImage("images/footstep.png");
-
-      	Knight knight = new Knight(new Point(1,1), "",
-      			200, 600, iStore);
-      	knight.schedule(world, System.currentTimeMillis(), iStore);
-      	world.addEntity(knight);
-
-      	OreBlob blob = new OreBlob(new Point(5, 5), "", 200, 1000, iStore);
-      	blob.schedule(world, System.currentTimeMillis(), iStore);
-      	world.addEntity(blob);
 	}
 
 	public void draw() {
@@ -87,11 +79,15 @@ public class Main extends PApplet {
 
 	public void mousePressed() {
       Point mousePt = new Point(viewPort.topLeft.getX() +
-         (int)(mouseX / tileWidth), viewPort.topLeft.getY() +
-         (int)(mouseY / tileHeight));
+         (int)(mouseX / viewPort.getTileWidth()), viewPort.topLeft.getY() +
+         (int)(mouseY / viewPort.getTileHeight()));
       if(!colosseum) {
          colosseum = true;
          world.addColosseum(mousePt, iStore);
+         List<Miner> miners = world.getMinersNear(mousePt, /*radius=*/ 12);
+         for(Miner m : miners) {
+            m.setTargetColosseum();
+         }
       }
 	}
 
