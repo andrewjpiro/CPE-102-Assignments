@@ -48,7 +48,7 @@ public class Miner extends Mover {
          Point entityPt = getPosition();
          Positionable target = null;
          if (training) {
-            target = world.findNearestAmphitheatre();
+            target = world.findNearestAmphitheatre(entityPt);
          }
          else if (resource < resourceLimit) {
             target = world.findNearestOre(entityPt);
@@ -65,6 +65,7 @@ public class Miner extends Mover {
             knight.schedule(world, System.currentTimeMillis(), iStore);
             world.removeEntity(this);
             world.addEntity(knight);
+            return knight.getPosition();
 
          }
          else if (found) {
