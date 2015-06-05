@@ -16,6 +16,14 @@ public class WorldView {
 		this.setValues(viewGrid, window, worldSize);
 		tracked = null;
 	}
+	
+	public float getTileWidth(){
+		return tileWidth;
+	}
+	
+	public float getTileHeight(){
+		return tileHeight;
+	}
 
 	public void setValues(Point tilesToDisplay, Point pixelDimensions, Point tileArraySize){
 		this.tileArraySize = new Point(tileArraySize.getX(), tileArraySize.getY());

@@ -188,7 +188,7 @@ public class WorldModel {
 		return (Vein) nearest(pt, candidates);
 	}
 	
-	public Amphitheatre findNearestAmpitheatre(Point pt){
+	public Amphitheatre findNearestAmphitheatre(Point pt){
 		List<Positionable> candidates = new ArrayList<Positionable>();
 		for (Positionable e : entities) {
 			if (e instanceof Amphitheatre) {
