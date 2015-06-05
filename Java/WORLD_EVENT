@@ -1,0 +1,10 @@
+1) Mouse click anywhere on grid
+
+2) On mouse click the Colosseum will be spawned and is then set as the target
+for all miners in a 12 tile radius.
+
+3) When miners reach the Colosseum they will be transformed into a knight
+ entity.
+
+4) Knights will chase after oreBlobs and kill them, transforming them into
+ veins.
