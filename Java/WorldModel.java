@@ -27,6 +27,24 @@ public class WorldModel {
 		this.entities = new ArrayList<Positionable>();
 		actionQueue = new PriorityQueue<ScheduledAction>();
 	}
+	
+	public List<Miner> getMinersNear(Point pt, int radius){
+		List<Miner> toReturn = new ArrayList<Miner>();
+		for (Positionable e : entities){
+			if (e instanceof Miner){
+				Point ePt = e.getPosition();
+				if (ePt.getX() > pt.getX() - radius && 
+					ePt.getX() < pt.getX() + radius &&
+					ePt.getY() > pt.getY() - radius && 
+					ePt.getY() < pt.getY() + radius){
+					
+					toReturn.add((Miner)e);
+				}
+			}
+		}
+		
+		return toReturn;
+	}
 
 	public List<Point> updateOnTime(Long ticks) {
 		List<Point> tiles = new ArrayList<Point>();
@@ -164,6 +182,17 @@ public class WorldModel {
 		}
 
 		return (Vein) nearest(pt, candidates);
+	}
+	
+	public Amphitheatre findNearestAmpitheatre(Point pt){
+		List<Positionable> candidates = new ArrayList<Positionable>();
+		for (Positionable e : entities) {
+			if (e instanceof Amphitheatre) {
+				candidates.add(e);
+			}
+		}
+
+		return (Amphitheatre) nearest(pt, candidates);
 	}
 
 	public Ore findNearestOre(Point pt) {
